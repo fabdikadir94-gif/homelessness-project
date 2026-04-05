@@ -1,83 +1,404 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ending Hunger & Homelessness</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== RESET ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+      background: linear-gradient(180deg, #f4f7fb 0%, #eaf0f8 100%);
+      color: #1f2937;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(rgba(8, 15, 30, 0.62), rgba(8, 15, 30, 0.78)),
+        url("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1600&q=80")
+        center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .overlay {
+      max-width: 900px;
+      padding: 42px 28px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .overlay h1 {
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: white;
+      margin-bottom: 14px;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .overlay p {
+      font-size: 1.2rem;
+      color: #f8fafc;
+      margin-bottom: 28px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn,
+    .cta button {
+      display: inline-block;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(220, 38, 38, 0.3);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+    }
+
+    .btn:hover,
+    .cta button:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 32px rgba(220, 38, 38, 0.38);
+      opacity: 0.98;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      padding: 16px 10px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18);
+    }
+
+    nav a {
+      display: inline-block;
+      color: #f8fafc;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 12px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 70px 28px;
+    }
+
+    section h2 {
+      font-size: clamp(2rem, 4vw, 2.9rem);
+      text-align: center;
+      margin-bottom: 20px;
+      color: #0f172a;
+      position: relative;
+    }
+
+    section h2::after {
+      content: "";
+      display: block;
+      width: 90px;
+      height: 5px;
+      margin: 14px auto 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ef4444, #f59e0b);
+    }
+
+    section p {
+      max-width: 850px;
+      margin: 0 auto;
+      font-size: 1.08rem;
+      color: #334155;
+      text-align: center;
+    }
+
+    #about,
+    #chicago,
+    #reflection,
+    #sources {
+      background: rgba(255, 255, 255, 0.82);
+      border-radius: 28px;
+      box-shadow: 0 16px 36px rgba(30, 41, 59, 0.08);
+      backdrop-filter: blur(8px);
+    }
+
+    /* ===== DARK DATA SECTION ===== */
+    .dark {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      border-radius: 28px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.2);
+    }
+
+    .dark h2,
+    .dark p {
+      color: white;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 36px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      color: #0f172a;
+      padding: 30px 22px;
+      border-radius: 22px;
+      text-align: center;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .card h3 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #dc2626;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: #334155;
+    }
+
+    /* ===== CTA ===== */
+    .cta {
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+      color: white;
+      border-radius: 30px;
+      box-shadow: 0 20px 42px rgba(153, 27, 27, 0.28);
+      text-align: center;
+    }
+
+    .cta h2,
+    .cta p {
+      color: white;
+    }
+
+    .cta ul {
+      list-style: none;
+      max-width: 700px;
+      margin: 28px auto 30px;
+      padding: 0;
+    }
+
+    .cta ul li {
+      background: rgba(255, 255, 255, 0.12);
+      margin: 12px 0;
+      padding: 16px 18px;
+      border-radius: 16px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    /* ===== SOURCES ===== */
+    .sources-list {
+      max-width: 700px;
+      margin: 24px auto 0;
+      padding-left: 20px;
+      color: #334155;
+    }
+
+    .sources-list li {
+      margin: 10px 0;
+      font-size: 1rem;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 28px 20px;
+      margin-top: 40px;
+      font-size: 0.96rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .overlay {
+        padding: 28px 18px;
+      }
+
+      nav a {
+        margin: 6px 5px;
+        font-size: 0.95rem;
+      }
+
+      section {
+        margin: 24px 14px;
+        padding: 50px 18px;
+      }
+
+      .card h3 {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="overlay">
-    <h1>Ending Hunger & Homelessness</h1>
-    <p>Awareness. Action. Change.</p>
-    <a href="#action" class="btn">Take Action</a>
-  </div>
-</header>
-
-<nav>
-  <a href="#about">About</a>
-  <a href="#data">Data</a>
-  <a href="#chicago">Chicago</a>
-  <a href="#action">Take Action</a>
-</nav>
-
-<section id="about">
-  <h2>Why This Matters</h2>
-  <p>
-    Millions of people around the world face hunger and homelessness every day.
-    This project raises awareness and encourages real-world action through volunteering,
-    donations, and education.
-  </p>
-</section>
-
-<section id="data" class="dark">
-  <h2>The Reality</h2>
-  <div class="cards">
-
-    <div class="card">
-      <h3>17 Million</h3>
-      <p>U.S. households face food insecurity</p>
+  <header class="hero">
+    <div class="overlay">
+      <h1>Ending Hunger & Homelessness</h1>
+      <p>
+        Raising awareness about poverty, food insecurity, and homelessness through education,
+        community action, and long-term support.
+      </p>
+      <a href="#action" class="btn">Take Action</a>
     </div>
+  </header>
 
-    <div class="card">
-      <h3>735 Million</h3>
-      <p>People worldwide suffer from hunger</p>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#data">The Reality</a>
+    <a href="#chicago">Chicago Impact</a>
+    <a href="#action">Take Action</a>
+    <a href="#reflection">Reflection</a>
+    <a href="#sources">Sources</a>
+  </nav>
+
+  <section id="about">
+    <h2>Why This Matters</h2>
+    <p>
+      Homelessness and food insecurity are growing issues affecting millions of people both globally
+      and within our own communities. In the United States alone, many families struggle to access
+      basic necessities such as food and shelter. This project was created to raise awareness,
+      educate others, and encourage action. By combining research, community involvement, and
+      advocacy, this website highlights the reality of poverty while showing that even small efforts
+      can create meaningful change.
+    </p>
+  </section>
+
+  <section id="data" class="dark">
+    <h2>The Reality</h2>
+    <p>
+      Hunger and homelessness are not rare problems. They affect millions of people every day and are
+      made worse by rising living costs, conflict, and economic instability.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>17 Million</h3>
+        <p>U.S. households experienced food insecurity.</p>
+      </div>
+
+      <div class="card">
+        <h3>735 Million</h3>
+        <p>People globally face chronic hunger.</p>
+      </div>
+
+      <div class="card">
+        <h3>650,000+</h3>
+        <p>People in the U.S. experience homelessness.</p>
+      </div>
+
+      <div class="card">
+        <h3>1 in 4</h3>
+        <p>Children worldwide live in severe child food poverty.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h3>650,000+</h3>
-      <p>People experience homelessness in the U.S.</p>
-    </div>
+  <section id="chicago">
+    <h2>Chicago Impact</h2>
+    <p>
+      Food insecurity and homelessness are not only global issues. They are happening right here in
+      Chicago. Thousands of individuals and families, including students, face housing instability and
+      rely on shelters and food pantries for survival. Local organizations play an important role in
+      supporting these individuals, especially during the winter months. Focusing on Chicago makes the
+      issue more personal and shows how communities can work together to support real solutions.
+    </p>
+  </section>
 
-  </div>
-</section>
+  <section id="action" class="cta">
+    <h2>Be Part of the Solution</h2>
+    <p>
+      Solving homelessness and food insecurity requires collective effort. Everyone can help in some way.
+    </p>
 
-<section id="chicago">
-  <h2>Chicago Impact</h2>
-  <p>
-    In Chicago, over 65,000 students experience homelessness.
-    Many rely on shelters, food banks, and community support to survive.
-  </p>
-</section>
+    <ul>
+      <li>Volunteer at local shelters and food pantries</li>
+      <li>Donate food, clothing, and hygiene products</li>
+      <li>Raise awareness through conversations and social media</li>
+      <li>Support organizations working to help families in need</li>
+    </ul>
 
-<section id="action" class="cta">
-  <h2>Be Part of the Solution</h2>
-  <p>You can make a real difference starting today.</p>
+    <button onclick="alert('Thank you for choosing to make a difference.')">I Will Help</button>
+  </section>
 
-  <ul>
-    <li>Volunteer at a shelter</li>
-    <li>Donate food or clothing</li>
-    <li>Share awareness online</li>
-    <li>Support local organizations</li>
-  </ul>
+  <section id="reflection">
+    <h2>Reflection</h2>
+    <p>
+      This project showed that homelessness and food insecurity are complex problems that require both
+      immediate support and long-term solutions. Researching these issues helped deepen understanding of
+      how poverty affects individuals, families, and children on both a local and global level. It also
+      demonstrated that awareness matters because education can inspire action, increase community
+      involvement, and encourage sustainable support for shelters and food programs.
+    </p>
+  </section>
 
-  <button onclick="alert('Thank you for taking action!')">I Will Help</button>
-</section>
+  <section id="sources">
+    <h2>Sources</h2>
+    <ul class="sources-list">
+      <li>UNICEF</li>
+      <li>World Food Programme</li>
+      <li>USDA food insecurity data</li>
+      <li>HUD homelessness reports</li>
+      <li>Chicago Coalition for the Homeless</li>
+      <li>Local shelter and food pantry organizations</li>
+    </ul>
+  </section>
 
-<footer>
-  <p>Community Awareness Project | 2026</p>
-</footer>
+  <footer>
+    <p>Community Awareness Project | 2026</p>
+  </footer>
 
 </body>
 </html>
